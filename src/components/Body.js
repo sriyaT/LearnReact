@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
-import ResCard from "./ResCard";
+import React, { useEffect, useState, useContext } from "react";
+import ResCard, { withPromotedLabel } from "./ResCard";
 import Shimmer from "./shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/userContext";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [filteredRes, setFilteredRes] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const ResCardPromoted = withPromotedLabel(ResCard);
 
   /* Whenever state variable update, React triggers a reconciliation cycle (renders the component)*/
 
+  const { loggedInUser, setUserName } = useContext(UserContext);
   useEffect(() => {
     fetchData();
   }, []);
@@ -21,6 +25,7 @@ const Body = () => {
     );
 
     const json = await data.json();
+
     setListOfRestaurants(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
@@ -28,6 +33,14 @@ const Body = () => {
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
+
+  const onlineStatus = useOnlineStatus();
+  if (onlineStatus === false)
+    return (
+      <h1>
+        Looks like you're offline, Please check your internet connection!!
+      </h1>
+    );
 
   /* Conditional Rendering: On a basis of a condition if something on ui
    is rendering  i.e called as conditional rendering */
@@ -43,17 +56,19 @@ const Body = () => {
     <Shimmer></Shimmer>
   ) : (
     <div className="body">
-      <div className="filter">
-        <div className="search">
+      <div className="filter flex items-center ">
+        <div className="search flex  m-4 p-2 rounded-lg items-center">
           <input
             type="text"
-            className="search-box"
+            className="border border-solid  h-[40px] border-black"
             value={searchValue}
             onChange={(e) => {
               setSearchValue(e?.target?.value);
             }}
           ></input>
+
           <button
+            className="px-4 py-2 bg-green-100 m-4 rounded-lg"
             onClick={() => {
               const filteredRes = listOfRestaurants?.filter((res) => {
                 return res?.info?.name
@@ -67,22 +82,36 @@ const Body = () => {
             Search
           </button>
         </div>
-        <button
-          className="filter-btn"
-          onClick={() => {
-            setListOfRestaurants(topRatedRes);
-          }}
-        >
-          {" "}
-          Top Rated Restaurants
-        </button>
+        <div className="search m-4 p-4 flex ">
+          <button
+            className="px-4 py-2 bg-gray-100 rounded-lg"
+            onClick={() => {
+              setListOfRestaurants(topRatedRes);
+            }}
+          >
+            {" "}
+            Top Rated Restaurants
+          </button>
+        </div>
+        <div className="search flex  m-4 p-2 rounded-lg items-center">
+          <label>UserName</label>
+          <input
+            className="border border-black p-2 m-2"
+            value={loggedInUser}
+            onChange={(e) => setUserName(e?.target?.value)}
+          />
+        </div>
       </div>
 
-      <div className="res-container">
+      <div className="flex flex-wrap justify-center">
         {filteredRes?.map((item, index) => {
           return (
             <Link key={item?.info?.id} to={"/restaurants/" + item?.info?.id}>
-              <ResCard resData={item} />
+              {item?.info?.promoted === true ? (
+                <ResCardPromoted resData={item} />
+              ) : (
+                <ResCard resData={item} />
+              )}
             </Link>
           );
         })}
@@ -90,5 +119,4 @@ const Body = () => {
     </div>
   );
 };
-
 export default Body;

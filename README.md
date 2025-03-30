@@ -58,3 +58,26 @@ There are 2 types of routing in web apps
 
 1. Client side routing
 2. Server side routing
+
+#Redux Tookit
+
+- Install @reduxjs/tookit and react-redux
+- Build our store
+- connect our store to our app
+- slice(cartSlice)
+  -dispatch(action)
+  -Selector
+
+#setting up testing in our app
+
+- Install React Testing library
+- Installed Jest
+- Installed babel dependency to use along with jest
+- configure babel
+- configure Parcel config file to disable babel transpilation
+- Jest configuration - npx jest --init
+- Install jsdom library
+- Install @babel/preset-react - to make JSX work in test cases
+- Include @babel/preset-react inside my babel config.
+- Install @testing-library/jest-dom
+- npm i -D @testing-library/jest-dom
