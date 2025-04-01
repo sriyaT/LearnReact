@@ -9,7 +9,7 @@ const ItemList = ({ items }) => {
   };
 
   return (
-    <div>
+    <div data-testid="foodItems">
       {items?.map((item) => {
         return (
           <div

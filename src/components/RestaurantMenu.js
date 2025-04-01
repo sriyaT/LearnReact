@@ -28,11 +28,11 @@ const RestaurantMenu = () => {
   return (
     <div className="text-center">
       <h1 className="font-bold my-6 text-2xl">{name}</h1>
-      <p className="font-bold text-lg">
+      <div className="font-bold text-lg">
         <h3>
           {cuisines.join(",")} -{costForTwoMessage}
         </h3>
-      </p>
+      </div>
       {/** Categories Accordions */}
       {categories?.map((category, index) => {
         return (

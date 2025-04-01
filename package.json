@@ -6,7 +6,8 @@
     "build": "rm -rf dist .parcel-cache && parcel build index.html",
     "dev": "rm -rf dist-dev .parcel-cache && parcel --dist-dir dist-dev index.html",
     "start": "parcel index.html",
-    "test": "jest"
+    "test": "jest",
+    "watch-test": "jest --watch"
   },
   "repository": {
     "type": "git",

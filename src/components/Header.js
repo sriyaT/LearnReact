@@ -13,7 +13,7 @@ const Header = () => {
   // Subscribing to the store, using a Selector
 
   const cartItems = useSelector((store) => store.cart.items);
-  console.log("cartItems", cartItems);
+
   /* If no dependency array => UseEffect is called on every render */
   /* If dependency array is empty = [] => useEffect is called on initial render(just once) */
   /* If dependency array is not empty, for ex [btnNameReact] => useEffect is called every time, when btnNameReact is updated */

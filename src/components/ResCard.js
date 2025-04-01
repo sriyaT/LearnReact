@@ -5,7 +5,7 @@ const ResCard = (props) => {
   const { info } = resData;
 
   return (
-    <div>
+    <div data-testid="resCard">
       <div className="m-4 p-4 w-[260px]  rounded-lg bg-gray-100 hover:bg-gray-400 ">
         <img
           className="rounded-lg h-[200px] w-[250px]"
@@ -15,11 +15,11 @@ const ResCard = (props) => {
       </div>
       <div className=" m-4 w-[250px] p-4">
         <h2 className="break-words ">{info?.name}</h2>
-        <span className="break-words">{(info?.cuisines).join(", ")}</span>
-        <p className="flex justify-between">
+        <span className="break-words">{info?.cuisines?.join(", ")}</span>
+        <div className="flex justify-between">
           <h3 className="break-words">{info?.avgRating} star</h3>
           <h3 className="break-words">{info?.sla?.deliveryTime} mins</h3>
-        </p>
+        </div>
       </div>
     </div>
   );
